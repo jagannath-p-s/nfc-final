@@ -24,8 +24,16 @@ function App() {
 
   return (
     <CenteredContainer>
-     
-<Customerside />
+      {/* Buttons to display different components */}
+      <button onClick={() => handleButtonClick('Customerside')}>Customerside</button>
+      <button onClick={() => handleButtonClick('ProfileCardComponent')}>Add Customer</button>
+      <button onClick={() => handleButtonClick('SocialMediaComponent')}>Admin</button>
+
+      {/* Conditionally render the selected component */}
+      {selectedComponent === 'Customerside' &&  <Customerside />}
+      {selectedComponent === 'ProfileCardComponent' && <InsertDataForm />}
+      {selectedComponent === 'SocialMediaComponent' && <SocialMediaComponent />}
+      {/* Add more conditionals for additional components */}
     
     </CenteredContainer>
   );

@@ -7,7 +7,7 @@ import socialMediaUrls from './socialMediaUrls'; // Import socialMediaUrls objec
 const ProfileCardComponent = () => (
     <Main>
         <ProfileCard>
-            <img src={socialMediaUrls.cardbackgroundimage} alt="Background" /> {/* Use background image URL */}
+            <img src={socialMediaUrls.cardbackgroundImage} alt="Background" /> {/* Use background image URL */}
         </ProfileCard>
         <ContentCard>
             <ProfileImage>

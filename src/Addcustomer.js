@@ -58,7 +58,7 @@ const SubmitButton = styled.button`
   }
 `;
 
-const AddCustomer = () => {
+const InsertDataForm = () => {
   const [formData, setFormData] = useState({
     card_background_image: '',
     avatar: '',
@@ -86,16 +86,38 @@ const AddCustomer = () => {
     }));
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData(prevState => ({
+      ...prevState,
+      card_background_image: file
+    }));
+  };
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    setFormData(prevState => ({
+      ...prevState,
+      avatar: file
+    }));
+  };
+
+  const handleBackgroundImageChange = (e) => {
+    const file = e.target.files[0];
+    setFormData(prevState => ({
+      ...prevState,
+      background_image: file
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Insert data into the public.social_media_data table
-      const { data, error } = await supabase.from('public.social_media_data').insert([formData]);
+      const { data, error } = await supabase.from('social_media_data').insert([formData]);
       if (error) {
         throw error;
       }
       console.log('Data inserted successfully:', data);
-
       // Clear form data after successful insertion
       setFormData({
         card_background_image: '',
@@ -119,14 +141,15 @@ const AddCustomer = () => {
       console.error('Error inserting data:', error.message);
     }
   };
-
+  
+  
   return (
     <Main>
-     <FormContainer onSubmit={handleSubmit}>
+      <FormContainer onSubmit={handleSubmit}>
   {/* Input fields for each column */}
   <Label>
     Card Background Image:
-    <input
+    <Input
       type="text"
       name="card_background_image"
       value={formData.card_background_image}
@@ -135,7 +158,7 @@ const AddCustomer = () => {
   </Label>
   <Label>
     Avatar:
-    <input
+    <Input
       type="text"
       name="avatar"
       value={formData.avatar}
@@ -144,7 +167,7 @@ const AddCustomer = () => {
   </Label>
   <Label>
     Name:
-    <input
+    <Input
       type="text"
       name="name"
       value={formData.name}
@@ -153,7 +176,7 @@ const AddCustomer = () => {
   </Label>
   <Label>
     Designation:
-    <input
+    <Input
       type="text"
       name="designation"
       value={formData.designation}
@@ -162,7 +185,7 @@ const AddCustomer = () => {
   </Label>
   <Label>
     Phone:
-    <input
+    <Input
       type="text"
       name="phone"
       value={formData.phone}
@@ -171,17 +194,16 @@ const AddCustomer = () => {
   </Label>
   <Label>
     WhatsApp:
-    <input
+    <Input
       type="text"
       name="whatsapp"
       value={formData.whatsapp}
       onChange={handleChange}
     />
   </Label>
-  {/* Add more input fields for the remaining columns */}
   <Label>
     Website:
-    <input
+    <Input
       type="text"
       name="website"
       value={formData.website}
@@ -190,7 +212,7 @@ const AddCustomer = () => {
   </Label>
   <Label>
     Facebook:
-    <input
+    <Input
       type="text"
       name="facebook"
       value={formData.facebook}
@@ -199,7 +221,7 @@ const AddCustomer = () => {
   </Label>
   <Label>
     Instagram:
-    <input
+    <Input
       type="text"
       name="instagram"
       value={formData.instagram}
@@ -208,7 +230,7 @@ const AddCustomer = () => {
   </Label>
   <Label>
     YouTube:
-    <input
+    <Input
       type="text"
       name="youtube"
       value={formData.youtube}
@@ -217,7 +239,7 @@ const AddCustomer = () => {
   </Label>
   <Label>
     LinkedIn:
-    <input
+    <Input
       type="text"
       name="linkedin"
       value={formData.linkedin}
@@ -226,7 +248,7 @@ const AddCustomer = () => {
   </Label>
   <Label>
     Google Reviews:
-    <input
+    <Input
       type="text"
       name="google_reviews"
       value={formData.google_reviews}
@@ -235,7 +257,7 @@ const AddCustomer = () => {
   </Label>
   <Label>
     Paytm:
-    <input
+    <Input
       type="text"
       name="paytm"
       value={formData.paytm}
@@ -244,7 +266,7 @@ const AddCustomer = () => {
   </Label>
   <Label>
     Email:
-    <input
+    <Input
       type="text"
       name="email"
       value={formData.email}
@@ -253,7 +275,7 @@ const AddCustomer = () => {
   </Label>
   <Label>
     Maps:
-    <input
+    <Input
       type="text"
       name="maps"
       value={formData.maps}
@@ -262,7 +284,7 @@ const AddCustomer = () => {
   </Label>
   <Label>
     Background Image:
-    <input
+    <Input
       type="text"
       name="background_image"
       value={formData.background_image}
@@ -276,4 +298,5 @@ const AddCustomer = () => {
   );
 };
 
-export default AddCustomer;
+export default InsertDataForm;
+

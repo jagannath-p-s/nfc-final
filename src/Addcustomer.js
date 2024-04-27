@@ -58,7 +58,7 @@ const SubmitButton = styled.button`
   }
 `;
 
-const InsertDataForm = () => {
+const AddCustomer = () => {
   const [formData, setFormData] = useState({
     card_background_image: '',
     avatar: '',
@@ -86,78 +86,16 @@ const InsertDataForm = () => {
     }));
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFormData(prevState => ({
-      ...prevState,
-      card_background_image: file
-    }));
-  };
-
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    setFormData(prevState => ({
-      ...prevState,
-      avatar: file
-    }));
-  };
-
-  const handleBackgroundImageChange = (e) => {
-    const file = e.target.files[0];
-    setFormData(prevState => ({
-      ...prevState,
-      background_image: file
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Upload files to Supabase storage
-      const cardBackgroundImageResponse = await supabase.storage.from('social_media_images').upload(`card_background_images/${formData.card_background_image.name}`, formData.card_background_image);
-      const avatarResponse = await supabase.storage.from('social_media_images').upload(`avatars/${formData.avatar.name}`, formData.avatar);
-      const backgroundImageResponse = await supabase.storage.from('social_media_images').upload(`background_images/${formData.background_image.name}`, formData.background_image);
-  
-      // Check for the most common upload error
-      let commonError = '';
-      if (cardBackgroundImageResponse.error) {
-        commonError = cardBackgroundImageResponse.error.message;
-      }
-      if (avatarResponse.error) {
-        if (commonError === '' || avatarResponse.error.message === commonError) {
-          commonError = avatarResponse.error.message;
-        }
-      }
-      if (backgroundImageResponse.error) {
-        if (commonError === '' || backgroundImageResponse.error.message === commonError) {
-          commonError = backgroundImageResponse.error.message;
-        }
-      }
-  
-      if (commonError !== '') {
-        throw new Error(`File upload failed: ${commonError}`);
-      }
-  
-      // Get URLs for uploaded files
-      const cardBackgroundImageUrl = cardBackgroundImageResponse.data.url;
-      const avatarUrl = avatarResponse.data.url;
-      const backgroundImageUrl = backgroundImageResponse.data.url;
-  
-      // Create a new record in the database with the file URLs
-      const { data, error } = await supabase.from('social_media_data').insert([
-        {
-          ...formData,
-          card_background_image: cardBackgroundImageUrl,
-          avatar: avatarUrl,
-          background_image: backgroundImageUrl
-        }
-      ]);
-  
+      // Insert data into the public.social_media_data table
+      const { data, error } = await supabase.from('public.social_media_data').insert([formData]);
       if (error) {
         throw error;
       }
-      
       console.log('Data inserted successfully:', data);
+
       // Clear form data after successful insertion
       setFormData({
         card_background_image: '',
@@ -181,161 +119,161 @@ const InsertDataForm = () => {
       console.error('Error inserting data:', error.message);
     }
   };
-  
-  
+
   return (
     <Main>
-      <FormContainer onSubmit={handleSubmit}>
-        {/* Input fields for each column */}
-        <Label>
-          Card Background Image:
-          <Input
-            type="file"
-            name="card_background_image"
-            accept=".jpg, .png, .jpeg, .svg"
-            onChange={handleFileChange}
-          />
-        </Label>
-        <Label>
-          Avatar:
-          <Input
-            type="file"
-            name="avatar"
-            accept=".jpg, .png, .jpeg, .svg"
-            onChange={handleAvatarChange}
-          />
-        </Label>
-        <Label>
-          Name:
-          <Input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label>
-          Designation:
-          <Input
-            type="text"
-            name="designation"
-            value={formData.designation}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label>
-          Phone:
-          <Input
-            type="text"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label>
-          WhatsApp:
-          <Input
-            type="text"
-            name="whatsapp"
-            value={formData.whatsapp}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label>
-          Website:
-          <Input
-            type="text"
-            name="website"
-            value={formData.website}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label>
-          Facebook:
-          <Input
-            type="text"
-            name="facebook"
-            value={formData.facebook}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label>
-          Instagram:
-          <Input
-            type="text"
-            name="instagram"
-            value={formData.instagram}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label>
-          YouTube:
-          <Input
-            type="text"
-            name="youtube"
-            value={formData.youtube}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label>
-          LinkedIn:
-          <Input
-            type="text"
-            name="linkedin"
-            value={formData.linkedin}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label>
-          Google Reviews:
-          <Input
-            type="text"
-            name="google_reviews"
-            value={formData.google_reviews}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label>
-          Paytm:
-          <Input
-            type="text"
-            name="paytm"
-            value={formData.paytm}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label>
-          Email:
-          <Input
-            type="text"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label>
-          Maps:
-          <Input
-            type="text"
-            name="maps"
-            value={formData.maps}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label>
-          Background Image:
-          <Input
-            type="file"
-            name="background_image"
-            accept=".jpg, .png, .jpeg, .svg"
-            onChange={handleBackgroundImageChange}
-          />
-        </Label>
-        <SubmitButton type="submit">Submit</SubmitButton>
-      </FormContainer>
+     <FormContainer onSubmit={handleSubmit}>
+  {/* Input fields for each column */}
+  <Label>
+    Card Background Image:
+    <input
+      type="text"
+      name="card_background_image"
+      value={formData.card_background_image}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    Avatar:
+    <input
+      type="text"
+      name="avatar"
+      value={formData.avatar}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    Name:
+    <input
+      type="text"
+      name="name"
+      value={formData.name}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    Designation:
+    <input
+      type="text"
+      name="designation"
+      value={formData.designation}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    Phone:
+    <input
+      type="text"
+      name="phone"
+      value={formData.phone}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    WhatsApp:
+    <input
+      type="text"
+      name="whatsapp"
+      value={formData.whatsapp}
+      onChange={handleChange}
+    />
+  </Label>
+  {/* Add more input fields for the remaining columns */}
+  <Label>
+    Website:
+    <input
+      type="text"
+      name="website"
+      value={formData.website}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    Facebook:
+    <input
+      type="text"
+      name="facebook"
+      value={formData.facebook}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    Instagram:
+    <input
+      type="text"
+      name="instagram"
+      value={formData.instagram}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    YouTube:
+    <input
+      type="text"
+      name="youtube"
+      value={formData.youtube}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    LinkedIn:
+    <input
+      type="text"
+      name="linkedin"
+      value={formData.linkedin}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    Google Reviews:
+    <input
+      type="text"
+      name="google_reviews"
+      value={formData.google_reviews}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    Paytm:
+    <input
+      type="text"
+      name="paytm"
+      value={formData.paytm}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    Email:
+    <input
+      type="text"
+      name="email"
+      value={formData.email}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    Maps:
+    <input
+      type="text"
+      name="maps"
+      value={formData.maps}
+      onChange={handleChange}
+    />
+  </Label>
+  <Label>
+    Background Image:
+    <input
+      type="text"
+      name="background_image"
+      value={formData.background_image}
+      onChange={handleChange}
+    />
+  </Label>
+  <SubmitButton type="submit">Submit</SubmitButton>
+</FormContainer>
+
     </Main>
   );
 };
 
-export default InsertDataForm;
-
+export default AddCustomer;

@@ -21,48 +21,72 @@ import Mapicon from './images/mapicon.svg';
 const SocialMediaComponent = () => (
   <Sociallinks>
     {/* First row */}
-    <Wrapper onClick={() => openURL(socialMediaUrls.phone)}>
-      <Image src={callIcon} alt="Phone" height={40} />
-    </Wrapper>
-    <Wrapper onClick={() => openURL(socialMediaUrls.whatsapp)}>
-      <Image src={whatsappIcon} alt="WhatsApp" height={54} />
-    </Wrapper>
-    <Wrapper onClick={() => openURL(socialMediaUrls.website)}>
-      <Image src={browseIcon} alt="Website" height={56} />
-    </Wrapper>
+    {socialMediaUrls.phone && (
+      <Wrapper onClick={() => openURL(socialMediaUrls.phone)}>
+        <Image src={callIcon} alt="Phone" height={40} />
+      </Wrapper>
+    )}
+    {socialMediaUrls.whatsapp && (
+      <Wrapper onClick={() => openURL(socialMediaUrls.whatsapp)}>
+        <Image src={whatsappIcon} alt="WhatsApp" height={54} />
+      </Wrapper>
+    )}
+    {socialMediaUrls.website && (
+      <Wrapper onClick={() => openURL(socialMediaUrls.website)}>
+        <Image src={browseIcon} alt="Website" height={56} />
+      </Wrapper>
+    )}
 
     {/* Second row */}
-    <Wrapper onClick={() => openURL(socialMediaUrls.facebook)}>
-      <Image src={facebookIcon} alt="Facebook" height={48} />
-    </Wrapper>
-    <Wrapper onClick={() => openURL(socialMediaUrls.instagram)}>
-      <Image src={instagramIcon} alt="Instagram" height={65} />
-    </Wrapper>
-    <Wrapper onClick={() => openURL(socialMediaUrls.youtube)}>
-      <Image src={youtubeIcon} alt="Youtube" height={48} />
-    </Wrapper>
+    {socialMediaUrls.facebook && (
+      <Wrapper onClick={() => openURL(socialMediaUrls.facebook)}>
+        <Image src={facebookIcon} alt="Facebook" height={48} />
+      </Wrapper>
+    )}
+    {socialMediaUrls.instagram && (
+      <Wrapper onClick={() => openURL(socialMediaUrls.instagram)}>
+        <Image src={instagramIcon} alt="Instagram" height={65} />
+      </Wrapper>
+    )}
+    {socialMediaUrls.youtube && (
+      <Wrapper onClick={() => openURL(socialMediaUrls.youtube)}>
+        <Image src={youtubeIcon} alt="Youtube" height={48} />
+      </Wrapper>
+    )}
 
     {/* Third row */}
-    <Wrapper onClick={() => openURL(socialMediaUrls.linkedin)}>
-      <Image src={linkedinIcon} alt="LinkedIn" height={48} />
-    </Wrapper>
-    <Wrapper onClick={() => openURL(socialMediaUrls.googleReviews)}>
-      <Image src={reviewIcon} alt="Google Reviews" height={65} />
-    </Wrapper>
-    <Wrapper onClick={() => openURL(socialMediaUrls.paytm)}>
-      <Image src={paytmIcon} alt="Paytm" height={65} />
-    </Wrapper>
+    {socialMediaUrls.linkedin && (
+      <Wrapper onClick={() => openURL(socialMediaUrls.linkedin)}>
+        <Image src={linkedinIcon} alt="LinkedIn" height={48} />
+      </Wrapper>
+    )}
+    {socialMediaUrls.googleReviews && (
+      <Wrapper onClick={() => openURL(socialMediaUrls.googleReviews)}>
+        <Image src={reviewIcon} alt="Google Reviews" height={65} />
+      </Wrapper>
+    )}
+    {socialMediaUrls.paytm && (
+      <Wrapper onClick={() => openURL(socialMediaUrls.paytm)}>
+        <Image src={paytmIcon} alt="Paytm" height={65} />
+      </Wrapper>
+    )}
 
     {/* Fourth row */}
-    <Wrapper onClick={() => openURL(socialMediaUrls.email)}>
-      <Image src={Mail} alt="Mail" height={75} />
-    </Wrapper>
-    <Wrapper onClick={() => openURL(socialMediaUrls.maps)}>
-      <Image src={Mapicon} alt="Maps" height={50} />
-    </Wrapper>
-    <Wrapper onClick={() => openURL(socialMediaUrls.maps)}>
-      <Image src={Gallery} alt="Maps" height={60} />
-    </Wrapper>
+    {socialMediaUrls.email && (
+      <Wrapper onClick={() => openURL(socialMediaUrls.email)}>
+        <Image src={Mail} alt="Mail" height={75} />
+      </Wrapper>
+    )}
+    {socialMediaUrls.maps && (
+      <Wrapper onClick={() => openURL(socialMediaUrls.maps)}>
+        <Image src={Mapicon} alt="Maps" height={50} />
+      </Wrapper>
+    )}
+    {socialMediaUrls.maps && (
+      <Wrapper onClick={() => openURL(socialMediaUrls.maps)}>
+        <Image src={Gallery} alt="Maps" height={60} />
+      </Wrapper>
+    )}
   </Sociallinks>
 );
 
